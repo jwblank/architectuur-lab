@@ -13,7 +13,7 @@ interface Props {
 
 export function PieceCard({ piece, onAdd, draggable = true, compact = false }: Props) {
   const meta = CATEGORY_META[piece.category];
-  const Icon = (LucideIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[piece.icon] ?? LucideIcons.Box;
+  const Icon = (LucideIcons as unknown as Record<string, React.ComponentType<{ className?: string; style?: React.CSSProperties }>>)[piece.icon] ?? LucideIcons.Box;
 
   return (
     <motion.button
