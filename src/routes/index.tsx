@@ -60,11 +60,11 @@ function Index() {
             </div>
             <div>
               <h1 className="font-display text-lg sm:text-xl font-semibold leading-tight">
-                <span className="text-gradient">SimCity</span>{" "}
-                <span className="text-foreground">for AI Architectures</span>
+                <span className="text-gradient">COP AI</span>{" "}
+                <span className="text-foreground">Sim</span>
               </h1>
               <p className="text-xs text-muted-foreground">
-                Ontdek spelenderwijs hoe AI-componenten samenwerken binnen de verzekeringswereld.
+                Ontdek spelenderwijs hoe AI-componenten samenwerken.
               </p>
             </div>
           </div>

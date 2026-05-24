@@ -167,7 +167,7 @@ export function ExplanationPanel({ analysis }: { analysis: Analysis }) {
             </div>
             <ul className="space-y-1.5 list-disc list-inside marker:text-primary">
               <li>Taalmodel + Vector Database + Documenten</li>
-              <li>AchmeaGPT + Schadedata</li>
+              <li>Eigen interne GPT + Schadedata</li>
               <li>Predictive AI + Weerdata + IoT Sensoren</li>
             </ul>
           </section>
