@@ -25,10 +25,10 @@ export const PIECES: Piece[] = [
   },
   {
     id: "achmeagpt",
-    naam: "AchmeaGPT",
+    naam: "Eigen interne GPT",
     category: "intel",
     icon: "Sparkles",
-    uitleg: "Intern taalmodel met Achmea-context en privacy-waarborg.",
+    uitleg: "Intern taalmodel voor privacy waarborging.",
     voegtToe: ["interne AI assistent", "veilige tekstverwerking"],
     heeftNodig: ["bedrijfsdata om écht waarde toe te voegen"],
     sterkMet: ["schadedata", "vector_db", "klantgesprekken", "documenten"],
@@ -197,8 +197,8 @@ export const RECIPES: Recipe[] = [
   {
     id: "achmea_schade",
     vereist: ["achmeagpt", "schadedata"],
-    titel: "Achmea-specifieke schade-AI",
-    uitleg: "Interne AI-oplossing met toegang tot Achmea-schadecontext.",
+    titel: "Interne GPT schade-AI",
+    uitleg: "Interne AI-oplossing met toegang tot schadecontext.",
     capabilities: ["Schadeduiding", "Interne assistent", "Beleidsadvies"],
     maturity: "vandaag",
   },
@@ -207,7 +207,7 @@ export const RECIPES: Recipe[] = [
     vereist: ["achmeagpt", "vector_db", "klantgesprekken"],
     titel: "Klant-bewuste assistent",
     uitleg:
-      "AchmeaGPT begrijpt eerdere klantinteracties en gebruikt realtime relevante kennis.",
+      "Eigen interne GPT begrijpt eerdere klantinteracties en gebruikt realtime relevante kennis.",
     capabilities: ["Realtime klantcontext", "Persoonlijke service", "Snellere afhandeling"],
     maturity: "vandaag",
   },
