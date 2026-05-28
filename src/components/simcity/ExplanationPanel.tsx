@@ -173,6 +173,6 @@ export function ExplanationPanel({ analysis }: { analysis: Analysis }) {
           </section>
         )}
       </div>
-    </aside>
+    </div>
   );
 }
