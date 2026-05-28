@@ -124,6 +124,7 @@
   --color-cat-data: var(--cat-data);
   --color-cat-ai: var(--cat-ai);
   --color-cat-constraint: var(--cat-constraint);
+  --color-cat-channel: var(--cat-channel);
   --font-display: "Space Grotesk", system-ui, sans-serif;
   --font-sans: "Inter", system-ui, sans-serif;
 }
