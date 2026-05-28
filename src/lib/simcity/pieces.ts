@@ -1,4 +1,4 @@
-export type Category = "intel" | "knowledge" | "data" | "ai" | "constraint";
+export type Category = "intel" | "knowledge" | "data" | "ai" | "channel" | "constraint";
 
 export interface Piece {
   id: string;
