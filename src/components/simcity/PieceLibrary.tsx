@@ -6,12 +6,12 @@ interface Props {
   onAdd: (piece: Piece) => void;
 }
 
-const ORDER: Category[] = ["intel", "knowledge", "data", "ai", "constraint"];
+const ORDER: Category[] = ["intel", "knowledge", "data", "ai", "channel", "constraint"];
 
 export function PieceLibrary({ onAdd }: Props) {
   const grouped = useMemo(() => {
     const g: Record<Category, Piece[]> = {
-      intel: [], knowledge: [], data: [], ai: [], constraint: [],
+      intel: [], knowledge: [], data: [], ai: [], channel: [], constraint: [],
     };
     PIECES.forEach((p) => g[p.category].push(p));
     return g;

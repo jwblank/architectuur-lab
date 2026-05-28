@@ -1,21 +1,25 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useMemo, useState } from "react";
-import { Sparkles } from "lucide-react";
+import { Sparkles, Wand2, ListChecks } from "lucide-react";
 import { PieceLibrary } from "@/components/simcity/PieceLibrary";
 import { Canvas, type PlacedPiece } from "@/components/simcity/Canvas";
 import { ExplanationPanel } from "@/components/simcity/ExplanationPanel";
+import { InspirationPanel } from "@/components/simcity/InspirationPanel";
 import { analyze, PIECE_MAP, type Piece } from "@/lib/simcity/pieces";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
   component: Index,
 });
 
+type Tab = "analyse" | "inspiratie";
+
 function Index() {
   const [placed, setPlaced] = useState<PlacedPiece[]>([]);
+  const [tab, setTab] = useState<Tab>("inspiratie");
 
   const addPiece = useCallback((piece: Piece, x = 50, y = 50) => {
     setPlaced((prev) => {
-      // Prevent duplicates per pieceId — keep architecture clean
       if (prev.some((p) => p.pieceId === piece.id)) return prev;
       const offset = prev.length * 2;
       return [
@@ -48,7 +52,8 @@ function Index() {
 
   const clear = useCallback(() => setPlaced([]), []);
 
-  const analysis = useMemo(() => analyze(placed.map((p) => p.pieceId)), [placed]);
+  const placedIds = useMemo(() => placed.map((p) => p.pieceId), [placed]);
+  const analysis = useMemo(() => analyze(placedIds), [placedIds]);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -78,7 +83,7 @@ function Index() {
       </header>
 
       <main className="flex-1 px-4 lg:px-6 py-4 lg:py-6">
-        <div className="grid gap-4 lg:gap-6 h-[calc(100vh-7.5rem)] grid-cols-1 lg:grid-cols-[300px_1fr_360px]">
+        <div className="grid gap-4 lg:gap-6 h-[calc(100vh-7.5rem)] grid-cols-1 lg:grid-cols-[300px_1fr_380px]">
           <div className="rounded-3xl border border-border/60 bg-card/40 backdrop-blur-sm p-4 overflow-hidden">
             <PieceLibrary onAdd={(p) => addPiece(p)} />
           </div>
@@ -90,9 +95,53 @@ function Index() {
             onRemove={remove}
             onClear={clear}
           />
-          <ExplanationPanel analysis={analysis} />
+          <aside className="flex flex-col h-full rounded-3xl border border-border/60 bg-card/40 backdrop-blur-sm overflow-hidden">
+            <div className="grid grid-cols-2 gap-1 p-1.5 border-b border-border/60 bg-muted/20">
+              <TabButton active={tab === "inspiratie"} onClick={() => setTab("inspiratie")} icon={Wand2}>
+                Inspiratie
+              </TabButton>
+              <TabButton active={tab === "analyse"} onClick={() => setTab("analyse")} icon={ListChecks}>
+                Analyse
+              </TabButton>
+            </div>
+            <div className="flex-1 overflow-hidden">
+              {tab === "inspiratie" ? (
+                <InspirationPanel placedIds={placedIds} />
+              ) : (
+                <ExplanationPanel analysis={analysis} />
+              )}
+            </div>
+          </aside>
         </div>
       </main>
     </div>
+  );
+}
+
+function TabButton({
+  active,
+  onClick,
+  icon: Icon,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  icon: React.ComponentType<{ className?: string }>;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        "inline-flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium transition-colors",
+        active
+          ? "bg-card text-foreground shadow-sm border border-border/60"
+          : "text-muted-foreground hover:text-foreground",
+      )}
+    >
+      <Icon className="h-3.5 w-3.5" />
+      {children}
+    </button>
   );
 }
