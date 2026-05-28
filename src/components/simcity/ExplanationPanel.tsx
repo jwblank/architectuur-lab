@@ -26,7 +26,7 @@ export function ExplanationPanel({ analysis }: { analysis: Analysis }) {
       : { label: "Leeg canvas", color: "var(--muted-foreground)", Icon: Info };
 
   return (
-    <aside className="flex flex-col h-full rounded-3xl border border-border/60 bg-card/40 backdrop-blur-sm overflow-hidden">
+    <div className="flex flex-col h-full overflow-hidden">
       <div className="px-5 py-4 border-b border-border/60">
         <div className="flex items-center gap-2">
           <span
