@@ -125,10 +125,11 @@ export function Canvas({ placed, connections, onAdd, onMove, onRemove, onClear }
               <div className="mx-auto h-14 w-14 rounded-2xl border border-dashed border-border flex items-center justify-center mb-4">
                 <MousePointerClick className="h-6 w-6 text-muted-foreground" />
               </div>
-              <h3 className="font-display text-foreground font-semibold">Sleep een bouwsteen hierheen</h3>
+              <h3 className="font-display text-foreground font-semibold">Sleep je eerste bouwsteen hierheen en begin met puzzelen.</h3>
               <p className="text-sm text-muted-foreground mt-1">
-                Begin met een <span className="text-foreground">Taalmodel</span> of een{" "}
-                <span className="text-foreground">Vector Database</span> en bouw uit.
+                Probeer eens: <span className="text-foreground">CRM-data</span> +{" "}
+                <span className="text-foreground">Levensgebeurtenissen</span> +{" "}
+                <span className="text-foreground">E-mail</span>. Of kies bovenaan een challenge.
               </p>
             </div>
           </div>
