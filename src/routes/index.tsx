@@ -4,7 +4,7 @@ import { Sparkles, Wand2, ListChecks, Star, Trophy } from "lucide-react";
 import { PieceLibrary } from "@/components/simcity/PieceLibrary";
 import { Canvas, type PlacedPiece } from "@/components/simcity/Canvas";
 import { ExplanationPanel } from "@/components/simcity/ExplanationPanel";
-import { InspirationPanel } from "@/components/simcity/InspirationPanel";
+import { InspirationPanel, type GeneratedIdee } from "@/components/simcity/InspirationPanel";
 import { FavoritesPanel } from "@/components/simcity/FavoritesPanel";
 import { analyze, CHALLENGES, PIECE_MAP, type Piece } from "@/lib/simcity/pieces";
 import { useFavorites } from "@/hooks/use-favorites";
@@ -20,6 +20,7 @@ function Index() {
   const [placed, setPlaced] = useState<PlacedPiece[]>([]);
   const [tab, setTab] = useState<Tab>("inspiratie");
   const [activeChallenge, setActiveChallenge] = useState<string | null>(null);
+  const [ideeen, setIdeeen] = useState<GeneratedIdee[]>([]);
   const fav = useFavorites();
 
   const addPiece = useCallback((piece: Piece, x = 50, y = 50) => {
@@ -160,7 +161,9 @@ function Index() {
               </TabButton>
             </div>
             <div className="flex-1 overflow-hidden">
-              {tab === "inspiratie" && <InspirationPanel placedIds={placedIds} />}
+              {tab === "inspiratie" && (
+                <InspirationPanel placedIds={placedIds} ideeen={ideeen} onIdeeenChange={setIdeeen} />
+              )}
               {tab === "analyse" && <ExplanationPanel analysis={analysis} onAddPiece={addById} />}
               {tab === "favorieten" && <FavoritesPanel />}
             </div>
