@@ -137,7 +137,7 @@ export function IdeeCard({
   onRemove,
   compact = false,
 }: {
-  idee: MarketingIdee;
+  idee: MarketingIdee & { id?: string };
   isFavorite?: boolean;
   onToggleFavorite?: () => void;
   onRemove?: () => void;
@@ -220,7 +220,7 @@ export function IdeeCard({
           <div className="flex flex-wrap gap-1">
             {idee.gebruikte_bouwstenen.map((b, i) => (
               <span
-                key={`${idee.id}-b-${i}`}
+                key={`${idee.id ?? idee.titel}-b-${i}`}
                 className="text-[10px] px-1.5 py-0.5 rounded-md border border-border/60 bg-muted/30 text-foreground/80"
               >
                 {b}
