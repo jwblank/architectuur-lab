@@ -29,7 +29,7 @@ export function PieceLibrary({ onAdd }: Props) {
           const items = grouped[cat];
           return (
             <section key={cat}>
-              <div className="flex items-center gap-2 mb-2">
+              <div className="sticky top-0 z-10 flex items-center gap-2 mb-2 py-1 bg-card/80 backdrop-blur-sm">
                 <span
                   className="h-1.5 w-1.5 rounded-full"
                   style={{ background: meta.color, boxShadow: `0 0 10px ${meta.color}` }}

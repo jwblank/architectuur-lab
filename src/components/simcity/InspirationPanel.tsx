@@ -10,19 +10,24 @@ import { PIECE_MAP } from "@/lib/simcity/pieces";
 import { useFavorites } from "@/hooks/use-favorites";
 import { cn } from "@/lib/utils";
 
-interface Props {
-  placedIds: string[];
+export interface GeneratedIdee extends MarketingIdee {
+  id: string;
 }
 
-export function InspirationPanel({ placedIds }: Props) {
+interface Props {
+  placedIds: string[];
+  ideeen: GeneratedIdee[];
+  onIdeeenChange: React.Dispatch<React.SetStateAction<GeneratedIdee[]>>;
+}
+
+export function InspirationPanel({ placedIds, ideeen, onIdeeenChange }: Props) {
   const fn = useServerFn(genereerInspiratie);
   const fav = useFavorites();
-  const [ideeen, setIdeeen] = useState<MarketingIdee[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const lastClick = useRef(0);
 
-  const tooFew = placedIds.length < 2;
+  const tooFew = placedIds.length < 3;
 
   const genereer = useCallback(async () => {
     const now = Date.now();
@@ -39,7 +44,13 @@ export function InspirationPanel({ placedIds }: Props) {
       const vorige = ideeen.slice(0, 3).map((i) => i.titel);
       const res = await fn({ data: { pieces, vorige } });
       if (res.ok) {
-        setIdeeen([...res.ideeen, ...ideeen].slice(0, 9));
+        onIdeeenChange((prev) => {
+          const nieuw: GeneratedIdee[] = res.ideeen.map((i, idx) => ({
+            ...i,
+            id: `${Date.now()}-${idx}-${Math.random().toString(36).slice(2, 8)}`,
+          }));
+          return [...nieuw, ...prev].slice(0, 9);
+        });
       } else {
         setError(res.error);
       }
@@ -48,7 +59,7 @@ export function InspirationPanel({ placedIds }: Props) {
     } finally {
       setLoading(false);
     }
-  }, [fn, placedIds, ideeen]);
+  }, [fn, placedIds, ideeen, onIdeeenChange]);
 
   return (
     <div className="flex flex-col h-full">
@@ -61,7 +72,7 @@ export function InspirationPanel({ placedIds }: Props) {
         </div>
         <p className="text-xs text-muted-foreground leading-snug">
           {tooFew
-            ? "Plaats minstens 2 bouwstenen — meer combinaties geven verrassendere ideeën."
+            ? "Combineer 3 of meer bouwstenen voor de beste ideeën."
             : "Laat AI bedenken welke verzekerings­proposities, campagnes of klantmomenten jouw combinatie mogelijk maakt."}
         </p>
         <button
@@ -105,9 +116,9 @@ export function InspirationPanel({ placedIds }: Props) {
         )}
 
         <AnimatePresence initial={false}>
-          {ideeen.map((idee, i) => (
+          {ideeen.map((idee) => (
             <IdeeCard
-              key={`${idee.titel}-${i}`}
+              key={idee.id}
               idee={idee}
               isFavorite={fav.isFavorite(idee)}
               onToggleFavorite={() => fav.toggle(idee)}
@@ -126,7 +137,7 @@ export function IdeeCard({
   onRemove,
   compact = false,
 }: {
-  idee: MarketingIdee;
+  idee: MarketingIdee & { id?: string };
   isFavorite?: boolean;
   onToggleFavorite?: () => void;
   onRemove?: () => void;
@@ -209,7 +220,7 @@ export function IdeeCard({
           <div className="flex flex-wrap gap-1">
             {idee.gebruikte_bouwstenen.map((b, i) => (
               <span
-                key={`${b}-${i}`}
+                key={`${idee.id ?? idee.titel}-b-${i}`}
                 className="text-[10px] px-1.5 py-0.5 rounded-md border border-border/60 bg-muted/30 text-foreground/80"
               >
                 {b}
